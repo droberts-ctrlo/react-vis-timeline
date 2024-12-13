@@ -24,7 +24,7 @@ export type TimelineEventHandler =
 	| 'markerchangeHandler'
 	| 'markerchangedHandler';
 
-export type TimelineEventsHandlers = Partial<Record<TimelineEventHandler, Function>>;
+export type TimelineEventsHandlers = Partial<Record<TimelineEventHandler, (event: any) => void>>;
 
 export type CustomTime = {
 	datetime: Date;

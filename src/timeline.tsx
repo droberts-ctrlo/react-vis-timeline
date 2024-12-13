@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import { DataSet } from 'vis-data/esnext';
 import { Timeline as VisTimelineCtor } from 'vis-timeline/esnext';
 import type {
@@ -78,7 +78,7 @@ export class Timeline extends Component<Props, {}> {
 	public readonly items: DataSet<TimelineItem>;
 	public readonly groups: DataSet<TimelineGroup>;
 
-	#ref = React.createRef<HTMLDivElement>();
+	ref = createRef<HTMLDivElement>();
 
 	constructor(props: Props) {
 		super(props);
@@ -100,7 +100,8 @@ export class Timeline extends Component<Props, {}> {
 
 	componentDidMount() {
 		Object.defineProperty(this, 'timeline', {
-			value: new VisTimelineCtor(this.#ref.current, this.items, this.groups, this.props.options),
+			// @ts-expect-error - items are no longer of the expected type
+			value: new VisTimelineCtor(this.ref.current, this.items, this.groups, this.props.options),
 			writable: false
 		});
 
@@ -222,6 +223,6 @@ export class Timeline extends Component<Props, {}> {
 	}
 
 	render() {
-		return <div ref={this.#ref} />;
+		return <div ref={this.ref} />;
 	}
 }
